@@ -32,6 +32,12 @@ public class NotaBuilder {
         }
     }
 
+    public void readName (String name) {
+        for (NotaEvent listener: listeners) {
+            listener.onName(name);
+        }
+    }
+
     public void readProduct (String name, String code, Double price, Double quantity, String measure) {
         for (NotaEvent listener: listeners) {
             listener.onProduct(name, code, price, quantity, measure);
@@ -41,6 +47,19 @@ public class NotaBuilder {
     public void notaParser (String nota) {
         int chave = nota.indexOf("CHAVE DE ACESSO");
         for (int j = 0; j < nota.length() - 20; j++) {
+            //NAME
+            if (nota.substring(j, j+17).equalsIgnoreCase("CONSULTA DA NFC-e")) {
+                String nameE;
+                StringBuilder name = new StringBuilder();
+                for(int count = j + 19; count < j + 117; count++) {
+                    if (nota.charAt(count) == '\n') {
+                        break;
+                    }
+                    name.append(nota.charAt(count));
+                }
+                nameE = name.toString();
+                readName(nameE);
+            }
             //CPF
             if (nota.substring(j, j + 3).equalsIgnoreCase("CPF")){
                 String a = nota.substring(j + 5, j + 19);

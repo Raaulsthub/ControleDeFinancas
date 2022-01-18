@@ -8,16 +8,18 @@ public class InVoice {
     public  String accessKey;
     public  String data;
     public  String cnpj;
+    public  String name;
     public List<Product> productList = new ArrayList<>();
 
     public InVoice () {
     }
 
-    public InVoice (String cpf, String accessKey, String data, String cnpj, List productList) {
+    public InVoice (String cpf, String accessKey, String data, String cnpj, List productList, String name) {
         this.cpf = cpf;
         this.accessKey = accessKey;
         this.data = data;
         this.cnpj = cnpj;
+        this.name = name;
         this.productList = productList;
     }
 
@@ -40,4 +42,6 @@ public class InVoice {
     public String getCnpj() {
         return cnpj;
     }
+
+    public String getName(){ return name; }
 }

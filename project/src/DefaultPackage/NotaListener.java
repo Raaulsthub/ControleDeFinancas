@@ -8,6 +8,7 @@ public class NotaListener implements NotaEvent {
     private String accessKey;
     private String data;
     private String cnpj;
+    private String name;
     public List<Product> productList = new ArrayList<>();
 
     @Override
@@ -31,6 +32,9 @@ public class NotaListener implements NotaEvent {
     }
 
     @Override
+    public void onName(String name) {this.name = name;}
+
+    @Override
     public void onProduct(String name, String code, Double price, Double quantity, String measure) {
         Product product = new Product(name, code, price, quantity, measure);
         productList.add(product);
@@ -38,7 +42,7 @@ public class NotaListener implements NotaEvent {
 
     @Override
     public InVoice build() {
-        return new InVoice(cpf, accessKey, data, cnpj, productList);
+        return new InVoice(cpf, accessKey, data, cnpj, productList, name);
     }
     
 }
