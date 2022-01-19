@@ -81,7 +81,7 @@ public class NotaBuilder {
                 readAccessKey(a);
             }
             //PARSING DOS PRODUTOS
-            if(nota.charAt(j) == '\n' && (nota.charAt(j + 1) >= 48 && nota.charAt(j + 1) <= 57) && j != chave + 15 && nota.charAt(j + 2) != '/') {
+            if(nota.charAt(j) == '\n' && nota.charAt(j - 2) != 'O' && (nota.charAt(j + 1) >= 48 && nota.charAt(j + 1) <= 57) && j != chave + 15 && nota.charAt(j + 2) != '/') {
                 //PRODUCT SPOTTED
                 int itr = 0, itr2 = 0, itr3 = 0, itr4  = 0;
 

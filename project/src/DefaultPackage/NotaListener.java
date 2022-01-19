@@ -32,7 +32,7 @@ public class NotaListener implements NotaEvent {
     }
 
     @Override
-    public void onName(String name) {this.name = name;}
+    public void onName(String name) { this.name = name; }
 
     @Override
     public void onProduct(String name, String code, Double price, Double quantity, String measure) {
