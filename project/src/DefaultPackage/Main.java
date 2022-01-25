@@ -34,9 +34,11 @@ public class Main {
             System.out.println("PRICE: " + product.getPrice());
             System.out.println("QUANTITY: " + product.getQuantity());
             System.out.println("MEASURE: " + product.getMeasure());
+            System.out.println();
+            System.out.println();
             i++;
         }
 
-        sqlCon.consult(inVoice);
+        //sqlCon.alimentar(inVoice);
     }
 }
