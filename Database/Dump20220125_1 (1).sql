@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `test` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `test`;
+CREATE DATABASE  IF NOT EXISTS `javaapp` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `javaapp`;
 -- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
 --
--- Host: localhost    Database: test
+-- Host: localhost    Database: javaapp
 -- ------------------------------------------------------
 -- Server version	8.0.27
 
@@ -81,8 +81,9 @@ CREATE TABLE `item` (
   `idNota` int unsigned NOT NULL,
   `noOrd` int unsigned NOT NULL,
   `preco` decimal(4,2) NOT NULL,
-  `qtde` int unsigned NOT NULL,
+  `qtde` float NOT NULL,
   `idProd` int unsigned NOT NULL,
+  `itemMed` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idNota`,`noOrd`),
   KEY `idProd` (`idProd`),
   CONSTRAINT `item_ibfk_1` FOREIGN KEY (`idNota`) REFERENCES `notafiscal` (`idNota`),
@@ -109,6 +110,7 @@ DROP TABLE IF EXISTS `notafiscal`;
 CREATE TABLE `notafiscal` (
   `idNota` int unsigned NOT NULL AUTO_INCREMENT,
   `dataNota` date NOT NULL,
+  `horaNota` varchar(255) NOT NULL,
   `pagForm` varchar(255) NOT NULL,
   `idPess` int unsigned NOT NULL,
   `idEst` int unsigned NOT NULL,
@@ -164,7 +166,7 @@ CREATE TABLE `usuario` (
   `nome` varchar(255) NOT NULL,
   `cpf` char(11) NOT NULL,
   PRIMARY KEY (`idPess`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -173,7 +175,6 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'João Davi Rigo Mazzarolo','01664366075');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -186,4 +187,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-18 18:17:27
+-- Dump completed on 2022-01-25 13:55:28

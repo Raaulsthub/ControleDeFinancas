@@ -74,13 +74,15 @@ public class sqlCon {
         return -1;
     }
 
-    private static Integer find_idNota(Integer idUser, String data, Integer idEst, ResultSet resultSet, Statement statement) {
+    private static Integer find_idNota(Integer idUser, String data, Integer idEst, ResultSet resultSet, Statement statement, InVoice inVoice) {
         try {
             StringBuilder sb1 = new StringBuilder();
             sb1.append("select * from notafiscal where idPess = '");
             sb1.append(idUser);
             sb1.append("' AND dataNota = '");
             sb1.append(data);
+            sb1.append("' AND horaNota = '");
+            sb1.append(inVoice.time);
             sb1.append("' AND idEst = '");
             sb1.append(idEst);
             sb1.append("';");
@@ -134,7 +136,7 @@ public class sqlCon {
         StringBuilder sb1 = new StringBuilder();
         StringBuilder sb2 = new StringBuilder();
             //finding data
-            String data = find_data(inVoice.data);
+            String data = find_data(inVoice.date);
 
             //searching user id
             Integer idUser = find_idUser(cpf, resultSet, statement);
@@ -145,6 +147,8 @@ public class sqlCon {
             //building sql command
             sb2.append("insert into notafiscal values (default, '");
             sb2.append(data);
+            sb2.append("', '");
+            sb2.append(inVoice.time);
             sb2.append("', '");
             sb2.append("notCODED");
             sb2.append("', '");
@@ -168,11 +172,11 @@ public class sqlCon {
         //finding idUser
         Integer idUser = find_idUser(format_cpf(inVoice.cpf), resultSet, statement);
         //finding data
-        String data = find_data(inVoice.data);
+        String data = find_data(inVoice.date);
         //finding idEst
         Integer idEst = find_idEst(format_cnpj(inVoice.cnpj), resultSet, statement);
         //finding idNota
-        Integer idNota = find_idNota(idUser, data, idEst, resultSet, statement);
+        Integer idNota = find_idNota(idUser, data, idEst, resultSet, statement, inVoice);
         int noOrd = 1;
         for (Product product: inVoice.productList) {
             try {
@@ -236,7 +240,7 @@ public class sqlCon {
         Connection connection = null;
         Statement statement = null;
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "raulstein22#!A");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/javaapp", "root", "raulstein22#!A");
             statement = connection.createStatement();
             ResultSet resultSet = null;
 

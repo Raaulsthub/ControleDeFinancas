@@ -6,7 +6,8 @@ import java.util.List;
 public class InVoice {
     public  String cpf;
     public  String accessKey;
-    public  String data;
+    public  String date;
+    public  String time;
     public  String cnpj;
     public  String name;
     public List<Product> productList = new ArrayList<>();
@@ -14,10 +15,11 @@ public class InVoice {
     public InVoice () {
     }
 
-    public InVoice (String cpf, String accessKey, String data, String cnpj, List productList, String name) {
+    public InVoice (String cpf, String accessKey, String data, String time, String cnpj, List productList, String name) {
         this.cpf = cpf;
         this.accessKey = accessKey;
-        this.data = data;
+        this.date = data;
+        this.time = time;
         this.cnpj = cnpj;
         this.name = name;
         this.productList = productList;
@@ -35,8 +37,8 @@ public class InVoice {
         return accessKey;
     }
 
-    public String getData() {
-        return data;
+    public String getDate() {
+        return date;
     }
 
     public String getCnpj() {
@@ -44,4 +46,6 @@ public class InVoice {
     }
 
     public String getName(){ return name; }
+
+    public String getTime(){ return time; }
 }

@@ -14,6 +14,8 @@ public class NotaBuilder {
     private static final int CNPJ_SIZE = 18;
     private static final int DATA_PARSER = 8;
     private static final int DATA_SIZE = 10;
+    private static final int TIME_PARSER = 23;
+    private static final int TIME_SIZE = 8;
     private static final int ACCESSK_PARSER = 15;
     private static final int ASCCI_NUMBER_0 = 48;
     private static final int ASCCI_NUMBER_9 = 57;
@@ -40,9 +42,15 @@ public class NotaBuilder {
         }
     }
 
-    public void readData (String data) {
+    public void readDate(String date) {
         for (NotaEvent listener: listeners) {
-            listener.onData(data);
+            listener.onDate(date);
+        }
+    }
+
+    public void readTime (String time) {
+        for (NotaEvent listener: listeners) {
+            listener.onTime(time);
         }
     }
 
@@ -87,8 +95,12 @@ public class NotaBuilder {
         return nota.substring(j + CNPJ_PARSER + 2, j + CNPJ_PARSER + 2 + CNPJ_SIZE);
     }
 
-    private static String parserData (int j, String nota) {
+    private static String parserDate (int j, String nota) {
         return nota.substring(j + DATA_PARSER + 1, j + DATA_PARSER + 1 + DATA_SIZE);
+    }
+
+    private static String parserTime (int j, String nota) {
+        return nota.substring(j + TIME_PARSER, j + TIME_PARSER + TIME_SIZE);
     }
 
     private static String parserAccessKey (int j, String nota) {
@@ -224,10 +236,12 @@ public class NotaBuilder {
             if (nota.substring(j, j + CNPJ_PARSER).equalsIgnoreCase("CNPJ")) {
                 readCnpj(parserCnpj(j, nota));
             }
-            //DATA
+            //DATA E HORA
             if (nota.substring(j, j + DATA_PARSER).equals("Impresso")) {
-                readData(parserData(j, nota));
+                readDate(parserDate(j, nota));
+                readTime(parserTime(j, nota));
             }
+
             //ACCESS KEY
             if (nota.substring(j, j + ACCESSK_PARSER).equals("CHAVE DE ACESSO")) {
                 readAccessKey(parserAccessKey(j, nota));

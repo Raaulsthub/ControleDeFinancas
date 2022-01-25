@@ -7,6 +7,7 @@ public class NotaListener implements NotaEvent {
     private String cpf;
     private String accessKey;
     private String data;
+    private String time;
     private String cnpj;
     private String name;
     public List<Product> productList = new ArrayList<>();
@@ -22,9 +23,12 @@ public class NotaListener implements NotaEvent {
     }
 
     @Override
-    public void onData(String data) {
+    public void onDate(String data) {
         this.data = data;
     }
+
+    @Override
+    public void onTime(String time) { this.time = time; }
 
     @Override
     public void onCnpj(String cnpj) {
@@ -42,7 +46,7 @@ public class NotaListener implements NotaEvent {
 
     @Override
     public InVoice build() {
-        return new InVoice(cpf, accessKey, data, cnpj, productList, name);
+        return new InVoice(cpf, accessKey, data, time, cnpj, productList, name);
     }
     
 }
