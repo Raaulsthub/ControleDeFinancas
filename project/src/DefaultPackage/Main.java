@@ -13,7 +13,7 @@ public class Main {
         NotaBuilder notaBuilder = new NotaBuilder();
         notaBuilder.addListener(mainListener);
         try {
-            File pdfFile = new File("C:\\Users\\Terminal\\Desktop\\UFSM\\2semestre\\project\\src\\DefaultPackage\\sample.pdf");
+            File pdfFile = new File("src/Samples/sample76.pdf");
             PDDocument pdDocument = Loader.loadPDF(pdfFile);
             PDFTextStripper pdfStripper = new PDFTextStripper();
             String text = pdfStripper.getText(pdDocument);
@@ -27,6 +27,7 @@ public class Main {
         InVoice inVoice = mainListener.build();
         int i = 0;
         System.out.printf("CPF: %s%nCNPJ: %s%nACCESSKEY: %s%nDATA: %s%nTIME: %s%nName: %s%n", inVoice.getCpf(), inVoice.getCnpj(), inVoice.getAccessKey(), inVoice.getDate(), inVoice.getTime(), inVoice.getName());
+
         for (Product product: inVoice.productList) {
             System.out.println("PRODUCT NUMBER " + i);
             System.out.println("CODE: " + product.getCode());

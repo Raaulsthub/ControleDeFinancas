@@ -19,6 +19,8 @@ public class NotaBuilder {
     private static final int ACCESSK_PARSER = 15;
     private static final int ASCCI_NUMBER_0 = 48;
     private static final int ASCCI_NUMBER_9 = 57;
+    private static final int ASCCI_LETTER_A = 65;
+    private static final int ASCCI_LETTER_Z = 90;
     private static final int ASCCI_SPACE = 32;
 
 
@@ -123,7 +125,7 @@ public class NotaBuilder {
         if (nota.charAt(j - 2) == 'O') {
             return false;
         }
-        if (nota.charAt(j + 1) <= ASCCI_NUMBER_0 || nota.charAt(j + 1) >= ASCCI_NUMBER_9) {
+        if (nota.charAt(j + 1) < ASCCI_NUMBER_0 || nota.charAt(j + 1) > ASCCI_NUMBER_9) {
             return false;
         }
         if (j == exception_chave + 15) {
@@ -145,9 +147,11 @@ public class NotaBuilder {
 
     private static boolean productNameCount(String nota, int k) {
         int stop = 0;
-        if (nota.charAt(k) >= ASCCI_NUMBER_0 && nota.charAt(k) <= ASCCI_NUMBER_9) {stop++;}
-        if (nota.charAt(k + 2) == 'u' && nota.charAt(k+3) == 'n') {stop++;}
-        else if(nota.charAt(k + 2) == 'k' && nota.charAt(k+3) == 'g') {stop++;}
+        if (nota.charAt(k) > ASCCI_NUMBER_0 && nota.charAt(k) < ASCCI_NUMBER_9) {stop++;}
+        if (nota.substring(k+2,k+4).equalsIgnoreCase("un")) {stop++;}
+        else if(nota.substring(k+2,k+4).equalsIgnoreCase("kg")) {stop++;}
+        else if (nota.substring(k+3,k+5).equalsIgnoreCase("un")) {stop++;}
+        else if(nota.substring(k+3,k+5).equalsIgnoreCase("kg")) {stop++;}
         if (stop == 2) {return true;}
         return false;
     }
@@ -198,7 +202,15 @@ public class NotaBuilder {
     }
 
     private static String parserProductMeasure (String nota, int j, ItrPointer itr, ItrPointer itr2, ItrPointer itr3){
-        return nota.substring(j + 2 + itr.value + itr2.value + itr3.value, j + 4 + itr.value + itr2.value + itr3.value);
+        StringBuilder sb = new StringBuilder();
+        sb.append(nota.substring(j + 2 + itr.value + itr2.value + itr3.value, j + 4 + itr.value + itr2.value + itr3.value));
+        if(sb.charAt(0) >= ASCCI_LETTER_A && sb.charAt(0) <= ASCCI_LETTER_Z) {
+            sb.setCharAt(0, (char)(sb.charAt(0) + 32));
+        }
+        if(sb.charAt(1) >= ASCCI_LETTER_A && sb.charAt(1) <= ASCCI_LETTER_Z) {
+            sb.setCharAt(1, (char) (sb.charAt(1) + 32));
+        }
+        return sb.toString();
     }
 
     private static double parserProductPrice (String nota, int j, ItrPointer itr, ItrPointer itr2, ItrPointer itr3, ItrPointer itr4) {
@@ -213,6 +225,7 @@ public class NotaBuilder {
             else if (nota.charAt(k) != 32){
                 sb.append(nota.charAt(k));
             }
+            System.out.println(sb.toString());
         }
         String price = sb.toString();
         double p = Double.parseDouble(price);
@@ -255,15 +268,19 @@ public class NotaBuilder {
                 ItrPointer itr4 = new ItrPointer();
                 //GETING CODE
                 String code = parserProductCode(nota, j, itr);
+                System.out.println(code);
 
                 //GETTING NAME
                 String name = parserProductName(nota, j, itr, itr2);
+                System.out.println(name);
 
                 //GETTING QUANTITY
                 double qt = parserProductQuantity(nota, j, itr, itr2, itr3);
+                System.out.println(qt);
 
                 //GETTING MEASURE
                 String measure = parserProductMeasure(nota, j, itr, itr2, itr3);
+                System.out.println(measure);
 
                 //GETTING PRICE
                 double p = parserProductPrice(nota, j, itr, itr2, itr3, itr4);

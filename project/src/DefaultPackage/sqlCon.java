@@ -16,6 +16,7 @@ public class sqlCon {
         sb2.append("insert into usuario values (default, '");
         Scanner sc = new Scanner(System.in);
         String name = sc.nextLine();
+        System.out.println(name);
         sb2.append(name);
         sb2.append("', '");
         sb2.append(cpf);
@@ -241,12 +242,13 @@ public class sqlCon {
         Statement statement = null;
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/javaapp", "root", "raulstein22#!A");
+
             statement = connection.createStatement();
             ResultSet resultSet = null;
 
-
             //USER
             String sql = user_sql(inVoice, format_cpf(inVoice.cpf));
+
             statement.executeUpdate(sql);
 
             //ESTABLISHMENT
@@ -257,7 +259,6 @@ public class sqlCon {
             sql = inVoice_sql(inVoice, format_cpf(inVoice.cpf), format_cnpj(inVoice.cnpj),resultSet, statement);
             System.out.println(sql);
             statement.executeUpdate(sql);
-
 
             //PRODUCTS
             for (Product product: inVoice.productList) {
